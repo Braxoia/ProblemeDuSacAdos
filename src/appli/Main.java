@@ -4,13 +4,15 @@ import java.io.BufferedReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class Main {
 
     public static void main(String[] args) {
-        List<Objet> objets = new LinkedList<>();
+        LinkedList<Objet> objets = new LinkedList<>();
 
         Path chemin = Paths.get("src/appli/items.txt");
         try(BufferedReader lecteur = Files.newBufferedReader(chemin))
@@ -33,11 +35,17 @@ public class Main {
             e.printStackTrace();
         }
 
-        SacADos sacADos = new SacADos(objets, 5.0F);
+        SacADos sacADos = new SacADos(objets, 40.0F);
+        Date d1 = new Date();
         sacADos.resoudreGloutonne();
+        Date d2 = new Date();
 
-        for (Objet o : sacADos.getObjetsSac()) {
+        long dateDiff = (d2.getTime() - d1.getTime());
+        System.out.println("Temps d'exec : " + TimeUnit.MILLISECONDS.convert(dateDiff, TimeUnit.MILLISECONDS) + "ms");
+
+
+       for (Objet o : sacADos.getObjetsSac()) {
             System.out.println(o);
-        }
+       }
     }
 }
